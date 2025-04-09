@@ -1,0 +1,27 @@
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
+
+# Set up the PDF
+filename = "A4_coordinate_grid.pdf"
+c = canvas.Canvas(filename, pagesize=A4)
+width, height = A4
+
+# Draw vertical lines and label X coordinates
+for x in range(0, int(width), 20):  # every 20 points (~7mm)
+    c.setStrokeColorRGB(0.85, 0.85, 0.85)
+    c.line(x, 0, x, height)
+    c.setFillColorRGB(0, 0, 0)
+    c.setFont("Helvetica", 6)
+    c.drawString(x + 1, 2, str(x))
+
+# Draw horizontal lines and label Y coordinates
+for y in range(0, int(height), 20):
+    c.setStrokeColorRGB(0.85, 0.85, 0.85)
+    c.line(0, y, width, y)
+    c.setFillColorRGB(0, 0, 0)
+    c.setFont("Helvetica", 6)
+    c.drawString(2, y + 1, str(y))
+
+# Finish up
+c.save()
+print(f"Grid PDF saved as {filename}")
